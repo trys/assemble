@@ -11,7 +11,9 @@ class assemble
 	{
 		session_start();
 		date_default_timezone_set( 'Europe/London' );
+		
 		include 'functions.php';
+		include 'api.php';
 		include 'controllers/index.php';
 		include 'models/index.php';
 		include 'viewmodels/index.php';
