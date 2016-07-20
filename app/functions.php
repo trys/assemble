@@ -85,31 +85,39 @@ function input_attribute( $attribute, $value = false ) {
 }
 
 
-function text_input( $name, $label, $value = '', $required = false, $placeholder = '', $additional = array() ) {
-	if ( ! $placeholder ) {
-		$placeholder = $label;
+function fields_exist( $array = array(), $values = array(), $empty = true ) {
+	$good = true;
+	foreach ( $values as $v ) {
+		if ( ( $empty && empty( $array[ $v ] ) ) || ! isset( $array[ $v ] ) ) {
+			$good = false;
+			break;
+		}
 	}
+	return $good;
+}
 
-	if ( ! $additional ) {
-		$additional = array(
+
+function text_input( $name, $label, $value = '', $required = false, $attributes = array() ) {
+
+	if ( ! $attributes ) {
+		$attributes = array(
 			'type' => 'text'
 		);
 	}
 
-	$additional_string = '';
-	foreach( $additional as $k => $v ) {
-		$additional_string .= $k . '="' . $v . '" ';
+	$attributes_string = '';
+	foreach( $attributes as $k => $v ) {
+		$attributes_string .= $k . '="' . $v . '" ';
 	}
 
 	echo '<p>
 	<label for="' . $name . '">' . $label . '</label>
 	<input '
-	. $additional_string
+	. $attributes_string
 	. input_attribute( 'id', $name )
 	. input_attribute( 'name', $name )
 	. input_attribute( 'value', esc( $value ) )
 	. input_attribute( 'required', $required )
-	. input_attribute( 'placeholder', $placeholder )
 	. '/></p>';
 }
 
