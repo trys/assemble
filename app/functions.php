@@ -27,8 +27,8 @@ function sanitize( $str ) {
 	return trim( strip_tags( preg_replace( $search, '', $str ) ) );
 }
 
-function redirect( $controller = '', $action = '', $parameters = '' ) {
-	header( 'Location: ' . url( $controller, $action, $parameters ), true, '302' );
+function redirect( $controller = '', $action = '', $parameters = '', $with_front = false ) {
+	header( 'Location: ' . url( $controller, $action, $parameters, true ), '302' );
 	exit;
 }
 
@@ -159,4 +159,9 @@ function select_input( $name, $label, $fields = array(), $value = '', $none = ''
 	}
 
 	echo '</select></p>';
+}
+
+
+function is_user_logged_in() {
+	return check_array( $_SESSION, 'user', false );
 }

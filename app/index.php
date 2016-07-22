@@ -11,6 +11,10 @@ class assemble
 	{
 		session_start();
 		date_default_timezone_set( 'Europe/London' );
+
+		require __DIR__ . '/../vendor/autoload.php';
+
+		include 'config.php';
 		
 		include 'functions.php';
 		include 'api.php';
