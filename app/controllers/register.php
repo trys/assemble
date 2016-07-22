@@ -34,9 +34,10 @@ class register extends index {
 
 		if ( $errors = $user->validate() ) {
 			$viewmodel->errors = $errors;
-			p( $errors );
+			$this->load_view( 'register/index', $viewmodel );
 		} else {
-			$user = new User( $post_data );
+			$user->hashPassword();
+			p( $user );
 		}
 	}
 
