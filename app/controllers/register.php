@@ -52,7 +52,7 @@ class register extends index {
 		include dirname(__file__) . '/../models/user.php';
 
 		$viewmodel = new ViewModel( array( 'title' => 'Register' ) );
-		$user = new User( $post_data );
+		$user = new User( array( 'email' => check_array( $post_data, 'login_email' ), 'password' => check_array( $post_data, 'login_password' ) ) );
 
 		if ( $errors = $user->validate_login() ) {
 			$viewmodel->login_errors = $errors;

@@ -1,0 +1,13 @@
+<h1><?php echo esc( $viewmodel->event->name );?></h1>
+<h2><time datetime="<?php echo date( 'c', $viewmodel->event->start );?>"><?php format_date( $viewmodel->event->start );?></time> - <time datetime="<?php echo date( 'c', $viewmodel->event->start );?>"><?php format_date( $viewmodel->event->end );?></time></h2>
+
+<h3><?php echo esc( $viewmodel->event->location );?></h3>
+
+
+
+
+<?php
+$current_user = current_user_id();
+if ( current_user_id() === $viewmodel->event->user_id ) :?>
+	<p><a href="<?php echo url( 'event', $viewmodel->event->id, 'edit' );?>">Edit</a></p>
+<?php endif;?>

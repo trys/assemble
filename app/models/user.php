@@ -28,6 +28,15 @@ class User
 			$this->errors[ 'email' ] = 'Please provide a valid email address';
 		}
 
+		if ( ! $this->errors ) {
+			$firebase = new \Firebase\FirebaseLib(DEFAULT_URL, DEFAULT_TOKEN);
+			$response = $firebase->get( DEFAULT_PATH . '/users', array( 'orderBy' => '"email"', 'equalTo' => json_encode( $this->email ) ) );
+			$response = json_decode( $response );
+			if ( $response ) {
+				$this->errors[ 'email' ] = 'This email address is already in use';	
+			}
+		}
+
 		if ( ! $this->password ) {
 			$this->errors[ 'password' ] = 'Please provide your password';
 		}
@@ -51,14 +60,14 @@ class User
 
 		$firebase = new \Firebase\FirebaseLib(DEFAULT_URL, DEFAULT_TOKEN);
 		$response = $firebase->get( DEFAULT_PATH . '/users', array( 'orderBy' => '"email"', 'equalTo' => json_encode( $this->email ) ) );
-		
+		$response = json_decode( $response );
 		if ( ! $response ) {
 			$this->errors[ 'email' ] = 'Please double-check your login details';
 			return $this->errors;
 		}
 
-		$this->decoded_response = json_decode( $response );
-		
+		$this->decoded_response = $response;
+
 		return $this->errors ? $this->errors : false;
 	}
 
@@ -71,24 +80,27 @@ class User
 	{
 		$firebase = new \Firebase\FirebaseLib(DEFAULT_URL, DEFAULT_TOKEN);
 
-		$userToSave = array(
+		$user_to_save = array(
 			'name' => $this->name,
 			'email' => $this->email,
 			'password' => $this->password
 		);
 
-		$user_id = $firebase->push( DEFAULT_PATH . '/users', $userToSave );
+		$user_id = $firebase->push( DEFAULT_PATH . '/users', $user_to_save );
 
-		unset( $userToSave[ 'password' ] );
+		$user_id = json_encode( $user_id );
+		$user_to_save->id = $user_id->name;
+		unset( $user_to_save[ 'password' ] );
 
 		return $userToSave;
 	}
 
 	public function login()
 	{
-		foreach( $this->decoded_response as &$user ) {
+		foreach( $this->decoded_response as $user_id => &$user ) {
 			if ( password_verify( $this->password, $user->password ) ) {
 				unset( $user->password );
+				$user->id = $user_id;
 				return $user;
 			} else {
 				return false;

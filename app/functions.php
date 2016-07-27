@@ -12,6 +12,10 @@ function check_object( $object, $key, $return = '' ) {
 	return ! empty( $object->$key ) ? $object->$key : $return;
 }
 
+function check_entity( $entity, $key, $return = '' ) {
+	return is_array( $entity ) ? check_array( $entity, $key, $return ) : check_object( $entity, $key, $return );
+}
+
 function esc( $str ) {
 	return htmlentities( $str );
 }
@@ -75,10 +79,6 @@ function order_object($array = array(), $key = 'points') {
 	return $array;
 }
 
-function format_date( $date ) {
-	return date( 'D jS F H:i', strtotime( $date ) );
-}
-
 
 function input_attribute( $attribute, $value = false ) {
 	return $value === false ? '' : ' ' . $attribute . '="' . $value . '"';
@@ -137,6 +137,16 @@ function number_input( $name, $label, $value = '', $required = false, $min = 0, 
 }
 
 
+function hidden_input( $name, $value = '' ) {
+	echo '
+	<input type="hidden"'
+	. input_attribute( 'id', $name )
+	. input_attribute( 'name', $name )
+	. input_attribute( 'value', esc( $value ) )
+	. '/>';
+}
+
+
 function select_input( $name, $label, $fields = array(), $value = '', $none = '', $required = false, $field_key = '_id', $field_label = 'name' ) {
 
 	echo '<p>
@@ -164,4 +174,22 @@ function select_input( $name, $label, $fields = array(), $value = '', $none = ''
 
 function is_user_logged_in() {
 	return check_array( $_SESSION, 'user', false );
+}
+
+
+function current_user_id() {
+	$current_user = is_user_logged_in();
+	return $current_user ? $current_user->id : '';
+}
+
+
+function format_date($date, $echo = true) {
+	$minutes = date( 'i', $date );
+	$date = date( 'jS F', $date ) . ' at ' . date( 'g', $date ) . ( $minutes === '00' ? '' : '.' . $minutes ) . date( 'a', $date );
+
+	if ( $echo ) {
+		echo $date;
+	} else {
+		return $date;
+	}
 }
