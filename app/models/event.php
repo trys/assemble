@@ -12,6 +12,11 @@ class EventModel
 		$this->start = check_entity($args, 'start');
 		$this->end = check_entity($args, 'end');
 		$this->user_id = check_entity($args, 'user_id');
+		$this->long_desc = check_entity($args, 'long_desc');
+		$this->short_desc = check_entity($args, 'short_desc');
+		$this->host = check_entity($args, 'host');
+		$this->guestlist = check_entity($args, 'guestlist');
+		$this->tags = check_entity($args, 'tags');
 
 		if ( ! $this->user_id && $current_user = is_user_logged_in() ) {
 			$this->user_id = $current_user->id;
@@ -25,6 +30,11 @@ class EventModel
 	public $start = '';
 	public $end = '';
 	public $user_id = '';
+	public $long_desc = '';
+	public $short_desc = '';
+	public $host = '';
+	public $guestlist = '';
+	public $tags = '';
 
 	public function validate_creation()
 	{
@@ -64,6 +74,11 @@ class EventModel
 		return $this->errors ? $this->errors : false;
 	}
 
+	public function can_be_edited()
+	{
+		return $this->user_id && current_user_id() === $this->user_id;
+	}
+
 	public function save()
 	{
 		$firebase = new \Firebase\FirebaseLib(DEFAULT_URL, DEFAULT_TOKEN);
@@ -81,5 +96,41 @@ class EventModel
 
 		return $eventToSave;
 	}
+
+	public function update()
+	{
+		$firebase = new \Firebase\FirebaseLib(DEFAULT_URL, DEFAULT_TOKEN);
+
+		$eventToSave = array(
+			'name' => $this->name,
+			'location' => $this->location,
+			'latlng' => $this->latlng,
+			'start' => $this->start,
+			'end' => $this->end,
+			'user_id' => $this->user_id,
+		);
+
+		$eventToSave = $firebase->update( DEFAULT_PATH . '/events/' . $this->id, $eventToSave );
+
+		return $eventToSave;
+	}
+
+	public function update_details()
+	{
+		$firebase = new \Firebase\FirebaseLib(DEFAULT_URL, DEFAULT_TOKEN);
+
+		$eventToSave = array(
+			'long_desc' => $this->long_desc,
+			'short_desc' => $this->short_desc,
+			'host' => $this->host,
+			'guestlist' => $this->guestlist,
+			'tags' => $this->tags
+		);
+
+		$eventToSave = $firebase->update( DEFAULT_PATH . '/events/' . $this->id, $eventToSave );
+
+		return $eventToSave;
+	}
+
 	
 }

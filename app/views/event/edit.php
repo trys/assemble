@@ -16,5 +16,5 @@
 	text_input( 'start', 'Event Start', $start, false, array( 'type' => 'datetime-local' ) );?>
 	<?php $end = check_object( $viewmodel->event, 'end' ) ? date( 'c', $viewmodel->event->end ) : '';
 	text_input( 'end', 'Event End', $end, false, array( 'type' => 'datetime-local' ) );?>
-	<input type="submit" value="Go!" class="button" />
+	<input type="submit" value="Save" class="button" />
 </form>

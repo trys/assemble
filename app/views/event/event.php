@@ -6,8 +6,6 @@
 
 
 
-<?php
-$current_user = current_user_id();
-if ( current_user_id() === $viewmodel->event->user_id ) :?>
+<?php if ( $viewmodel->event->can_be_edited() ) :?>
 	<p><a href="<?php echo url( 'event', $viewmodel->event->id, 'edit' );?>">Edit</a></p>
 <?php endif;?>
