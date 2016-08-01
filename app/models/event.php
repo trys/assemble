@@ -66,6 +66,13 @@ class EventModel
 			}
 		}
 
+		if ( $this->tags && ! is_array( $this->tags ) ) {
+			$this->errors[ 'tags' ] = 'Please provide a list of tags';
+		}
+
+		if ( $this->guests && ! is_array( $this->guests ) ) {
+			$this->errors[ 'guestlist' ] = 'Please provide a list of guests';
+		}
 
 		if ( ! $this->errors && ! $this->user_id ) {
 			redirect( 'register' );
@@ -92,6 +99,8 @@ class EventModel
 			'user_id' => $this->user_id,
 		);
 
+		$eventToSave = array_map('sanitize', $eventToSave);
+
 		$eventToSave = $firebase->push( DEFAULT_PATH . '/events', $eventToSave );
 
 		return $eventToSave;
@@ -108,24 +117,14 @@ class EventModel
 			'start' => $this->start,
 			'end' => $this->end,
 			'user_id' => $this->user_id,
-		);
-
-		$eventToSave = $firebase->update( DEFAULT_PATH . '/events/' . $this->id, $eventToSave );
-
-		return $eventToSave;
-	}
-
-	public function update_details()
-	{
-		$firebase = new \Firebase\FirebaseLib(DEFAULT_URL, DEFAULT_TOKEN);
-
-		$eventToSave = array(
 			'long_desc' => $this->long_desc,
 			'short_desc' => $this->short_desc,
 			'host' => $this->host,
 			'guestlist' => $this->guestlist,
 			'tags' => $this->tags
 		);
+
+		$eventToSave = array_map('sanitize', $eventToSave);
 
 		$eventToSave = $firebase->update( DEFAULT_PATH . '/events/' . $this->id, $eventToSave );
 

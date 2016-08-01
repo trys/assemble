@@ -20,15 +20,54 @@ function esc( $str ) {
 	return htmlentities( $str );
 }
 
-function sanitize( $str ) {
-	$search = array(
-		'@<script[^>]*?>.*?</script>@si',
-		'@<[\/\!]*?[^<>]*?>@si',
-		'@<style[^>]*?>.*?</style>@siU',
-		'@<![\s\S]*?--[ \t\n\r]*>@'
-	);
+function paragraph( $str ) {
+	echo nl2p( esc( $str ) );
+}
 
-	return trim( strip_tags( preg_replace( $search, '', $str ) ) );
+/**
+ * Returns string with newline formatting converted into HTML paragraphs.
+ *
+ * @author Michael Tomasello <miketomasello@gmail.com>
+ * @copyright Copyright (c) 2007, Michael Tomasello
+ * @license http://www.opensource.org/licenses/bsd-license.html BSD License
+ * 
+ * @param string $string String to be formatted.
+ * @param boolean $line_breaks When true, single-line line-breaks will be converted to HTML break tags.
+ * @param boolean $xml When true, an XML self-closing tag will be applied to break tags (<br />).
+ * @return string
+ */
+function nl2p($string, $line_breaks = true, $xml = true)
+{
+    // Remove existing HTML formatting to avoid double-wrapping things
+    $string = str_replace(array('<p>', '</p>', '<br>', '<br />'), '', $string);
+ 
+    // It is conceivable that people might still want single line-breaks
+    // without breaking into a new paragraph.
+    if ($line_breaks == true)
+        return '<p>'.preg_replace(array("/([\n]{2,})/i", "/([^>])\n([^<])/i"), array("</p>\n<p>", '<br'.($xml == true ? ' /' : '').'>'), trim($string)).'</p>';
+    else 
+        return '<p>'.preg_replace("/([\n]{1,})/i", "</p>\n<p>", trim($string)).'</p>';
+}
+
+function sanitize( $input ) {
+	if ( is_array( $input ) ) {
+		$input = array_filter( $input );
+		$input = array_values( $input );
+		return array_map( 'sanitize', $input );
+	} elseif ( is_string( $input ) || is_int( $input ) ) {
+
+		$search = array(
+			'@<script[^>]*?>.*?</script>@si',
+			'@<[\/\!]*?[^<>]*?>@si',
+			'@<style[^>]*?>.*?</style>@siU',
+			'@<![\s\S]*?--[ \t\n\r]*>@'
+		);
+
+		return trim( strip_tags( preg_replace( $search, '', $input ) ) );
+
+	} else {
+		return $input;
+	}
 }
 
 function redirect( $controller = '', $action = '', $parameters = '', $with_front = false ) {
@@ -171,6 +210,45 @@ function select_input( $name, $label, $fields = array(), $value = '', $none = ''
 	echo '</select></p>';
 }
 
+
+function textarea_input( $name, $label, $value = '', $required = false, $attributes = array() ) {
+
+	if ( ! $attributes ) {
+		$attributes = array(
+			'type' => 'text'
+		);
+	}
+
+	$attributes_string = '';
+	foreach( $attributes as $k => $v ) {
+		$attributes_string .= $k . '="' . $v . '" ';
+	}
+
+	echo '<p>
+	<label for="' . $name . '">' . $label . '</label>
+	<textarea '
+	. $attributes_string
+	. input_attribute( 'id', $name )
+	. input_attribute( 'name', $name )
+	. input_attribute( 'required', $required )
+	. '>' . esc( $value ) . '</textarea></p>';
+}
+
+
+function multiline_input( $name, $label = '', $value = array() ) {
+	echo '<p><label>' . $label . '</label> ';
+	$value = is_array( $value ) ? $value : array();
+	foreach ( $value as $line ) {
+		echo '<input type="text"'
+		. input_attribute( 'name', $name )
+		. input_attribute( 'value', esc( $line ) )
+		. '/>';
+	}
+
+	echo '<input type="text"' . input_attribute( 'name', $name ) . '/>';
+	
+	echo '</p>';
+}
 
 function is_user_logged_in() {
 	return check_array( $_SESSION, 'user', false );

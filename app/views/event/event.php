@@ -3,8 +3,9 @@
 
 <h3><?php echo esc( $viewmodel->event->location );?></h3>
 
-
-
+<?php if ( $long_desc = check_object( $viewmodel->event, 'long_desc' ) ) :?>
+	<?php paragraph( $long_desc );?>
+<?php endif;?> 
 
 <?php if ( $viewmodel->event->can_be_edited() ) :?>
 	<p><a href="<?php echo url( 'event', $viewmodel->event->id, 'edit' );?>">Edit</a></p>
