@@ -271,3 +271,9 @@ function format_date($date, $echo = true) {
 		return $date;
 	}
 }
+
+
+function is_url($to_test) {
+	preg_match('/\b(([\w-]+:\/\/?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|\/)))/', $to_test, $matches);
+	return ( $matches );
+}

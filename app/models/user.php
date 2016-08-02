@@ -5,14 +5,21 @@ class User
 	
 	function __construct( $args = array() )
 	{
-		$this->name = filter_var( check_array( $args, 'name' ), FILTER_SANITIZE_STRING );
-		$this->email = filter_var( check_array($args, 'email'), FILTER_SANITIZE_EMAIL );
-		$this->password = check_array( $args, 'password' );
+		$this->name = filter_var( check_entity( $args, 'name' ), FILTER_SANITIZE_STRING );
+		$this->email = filter_var( check_entity($args, 'email'), FILTER_SANITIZE_EMAIL );
+		$this->job_title = filter_var( check_entity( $args, 'job_title' ), FILTER_SANITIZE_STRING );
+		$this->employer = filter_var( check_entity( $args, 'employer' ), FILTER_SANITIZE_STRING );
+		$this->website = filter_var( check_entity( $args, 'website' ), FILTER_SANITIZE_STRING );
+		$this->password = check_entity( $args, 'password' );
 	}
 
+	public $id = '';
 	public $name = '';
 	public $email = '';
 	public $password = '';
+	public $job_title = '';
+	public $employer = '';
+	public $website = '';
 	public $decoded_response;
 	private $errors = array();
 
@@ -71,6 +78,42 @@ class User
 		return $this->errors ? $this->errors : false;
 	}
 
+	public function validate_update()
+	{
+		if ( ! $this->email || ! filter_var( $this->email, FILTER_VALIDATE_EMAIL ) ) {
+			$this->errors[ 'email' ] = 'Please provide your email address';
+		}
+
+		if ( $this->website && ! is_url( $this->website ) ) {
+			if ( $this->website && strpos( 'http', $this->website ) !== 0 ) {
+				$this->website = 'http://' . $this->website;
+				if ( ! is_url( $this->website ) ) {
+					$this->errors[ 'website' ] = 'Please provide a valid website address';
+				}
+			} elseif ( $this->website ) {
+				$this->errors[ 'website' ] = 'Please provide a valid website address';
+			}
+		}
+
+		return $this->errors ? $this->errors : false;
+	}
+
+	public function can_be_edited()
+	{
+		return $this->id && current_user_id() === $this->id;
+	}
+
+	public function compare( $array, $name, $filter = FILTER_SANITIZE_STRING )
+	{
+		if ( ! isset( $array[ $name ] ) ) {
+			return;
+		}
+
+		if ( $this->{$name} !== $array[ $name ] ) {
+			$this->{$name} = filter_var( $array[ $name ], $filter );
+		}
+	}
+
 	public function hashPassword()
 	{
 		$this->password = password_hash( $this->password, PASSWORD_DEFAULT );
@@ -86,9 +129,11 @@ class User
 			'password' => $this->password
 		);
 
+		$user_to_save = array_map('sanitize', $user_to_save);
+
 		$user_id = $firebase->push( DEFAULT_PATH . '/users', $user_to_save );
 
-		$user_id = json_encode( $user_id );
+		$user_id = json_decode( $user_id );
 		$user_to_save->id = $user_id->name;
 		unset( $user_to_save[ 'password' ] );
 
@@ -106,6 +151,35 @@ class User
 				return false;
 			}
 		}
+	}
+
+	public function update()
+	{
+		$firebase = new \Firebase\FirebaseLib(DEFAULT_URL, DEFAULT_TOKEN);
+
+		if ( ! $this->id ) {
+			$user_id = current_user_id();
+			if ( ! $user_id ) {
+				return;
+			} else {
+				$this->id = $user_id;
+			}
+		}
+
+		$user_to_save = array(
+			'name' => $this->name,
+			'email' => $this->email,
+			'password' => $this->password,
+			'job_title' => $this->job_title,
+			'employer' => $this->employer,
+			'website' => $this->website
+		);
+
+		$user_to_save = array_map('sanitize', $user_to_save);
+
+		$firebase->update( DEFAULT_PATH . '/users/' . $this->id, $user_to_save );
+
+		return $userToSave;
 	}
 
 }

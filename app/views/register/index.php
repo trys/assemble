@@ -10,7 +10,7 @@
 	<?php endif;?>
 
 	<?php text_input( 'name', 'Your Name', check_array( $_POST, 'name' ), false );?>
-	<?php text_input( 'email', 'Email Address', check_array( $_POST, 'email' ), false, array( 'type' => 'text' ) );?>
+	<?php text_input( 'email', 'Email Address', check_array( $_POST, 'email' ), false, array( 'type' => 'email' ) );?>
 	<?php text_input( 'password', 'Password', '', false, array( 'type' => 'password' ) );?>
 
 	<input type="hidden" name="method" value="register" />
