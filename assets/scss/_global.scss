@@ -1,0 +1,112 @@
+body {
+	-moz-osx-font-smoothing: grayscale;
+	 -webkit-font-smoothing: antialiased;
+	letter-spacing: 0.025em;
+	background: #F2F2F4;
+	color: $copy;
+	font: 400 18px/1.4 $font;
+}
+
+
+[role=banner] {
+	background: $blue;
+	color: #FFF;
+	padding: 0.5rem 1rem;
+
+	.logo {
+		font-size: 2em;
+		border-bottom: 2px solid;
+		width: auto;
+	}
+
+	ul {
+		table-layout: fixed;
+		display: table;
+		width: 100%;
+		margin: 1rem 0 0;
+	}
+
+	li {
+		display: table-cell;
+
+		span {
+			display: none;
+		}
+
+		&.desktop {
+			display: none;
+		}
+
+		@include mq(30em) {
+			span {
+				display: inline;
+			}
+
+			&.desktop {
+				display: table-cell;
+			}
+
+			&.mobile {
+				display: none;
+			}
+		}
+	}
+}
+
+@include mq(48em) {
+	[role=banner] {
+		position: fixed;
+		height: 100%;
+		width: 30%;
+		left: 0;
+		top: 0;
+
+		ul {
+			display: block;
+
+			font-size: 1.3em; 
+		}
+
+		li {
+			display: block;
+		}
+	}
+
+	body {
+		padding-left: 30%;
+	}
+}
+
+
+.main {
+	padding: 15px;
+
+	&:after {
+		display: table;
+		content: '';
+		clear: both;
+	}
+
+	@include mq(30em) {
+		padding: 25px;
+	}
+}
+
+.primary {
+	margin-bottom: 30px;
+}
+
+@include mq(55em) {
+
+	.primary {
+		margin-bottom: 0;
+		width: 48%;
+		float: left;
+	}
+
+	.secondary {
+		width: 48%;
+		float: right;
+	}
+
+}

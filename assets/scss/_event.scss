@@ -1,0 +1,66 @@
+.events {
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+
+	&:before {
+		content: '';
+		width: 1px;
+		height: 100%;
+		position: absolute;
+		background: #F2F2F4;
+		left: 0;
+		top: 0;
+	}
+}
+
+
+.event-preview {
+	flex: 1 0 400px;
+	border-bottom: 1px solid $line;
+	border-left: 1px solid $line;
+	
+	a {
+		display: block;
+		padding: 10px;
+
+		@include mq( 40em ) {
+			padding: 25px;
+		}
+	}
+
+	.title:after {
+		margin-bottom: 23px;
+	}
+
+	.event-time {
+		margin-bottom: 19px;
+	}
+}
+
+
+.map {
+	height: 50vh;
+	width: 100%;
+	background: $line;
+	margin: 0 0 1rem;
+	position: relative;
+
+	#map {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		left: 0;
+		top: 0;
+	}
+}
+
+.tags {
+	li {
+		display: inline-block;
+
+		+ li:before {
+			content: ', ';
+		}
+	}
+}

@@ -1,0 +1,108 @@
+form p {
+	margin: 0 0 28px;
+}
+
+fieldset {
+	padding: 0;
+	margin: 0 0 1.5rem;
+	border: none;
+}
+
+legend {
+	font-weight: 700;
+	font-size: 1.25em;
+	color: $copy;
+}
+
+.button,
+select,
+input {
+	-webkit-transition: 300ms all;
+	        transition: 300ms all;
+	border-radius: 0;
+	box-shadow: none;
+	outline: none;
+}
+
+textarea,
+select,
+input {
+	-webkit-appearance: none;
+	background: #FFF;
+	padding: 0.81875rem;
+	border: 1px solid $line;
+	margin: 0;
+	width: 100%;
+	color: $copy;
+	font: 400 16px $font;
+}
+
+textarea:focus,
+select:focus,
+input:focus {
+	border-color: darken( $line, 5% );
+}
+
+textarea {
+	-webkit-appearance: none;
+	border-radius: 0;
+	min-height: 7.5rem;
+	box-shadow: none;
+	min-width: 100%;
+	max-width: 100%;
+	outline: none;
+}
+
+label {
+	display: block;
+	margin: 0 0 2px;
+	cursor: pointer;
+	font: 700 1.25rem $font;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+	-webkit-appearance: normal;
+	margin: 0;
+	width: auto;
+}
+
+.button--reset {
+	background: none;
+	padding: 0;
+	border: 0;
+	outline: none;
+	box-shadow: none;
+	cursor: pointer;
+}
+
+.button,
+input[type=submit],
+input[type=button] {
+	text-decoration: none;
+	line-height: 1;
+	background: transparent;
+	text-align: center;
+	display: inline-block;
+	padding: 10px 20px;
+	margin: 0 0.75rem 1.5rem 0;
+	cursor: pointer;
+	border: 2px solid $blue;
+	width: auto;
+	color: $blue;
+	font: 700 1em $font;
+}
+
+.button:hover,
+input[type=submit]:hover,
+input[type=button]:hover {
+	background: $blue;
+	color: #FFF;
+}
+
+.errors {
+	border-bottom: 2px solid #F13030;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+	color: #F13030;
+}

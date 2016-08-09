@@ -1,5 +1,5 @@
 <h1>Create an event</h1>
-<form method="POST">
+<form method="POST" class="primary">
 
 	<?php if ( $errors = check_object( $viewmodel, 'errors' ) ) :?>
 		<ul class="errors">

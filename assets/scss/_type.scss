@@ -1,0 +1,58 @@
+
+h1,
+h2,
+h3,
+h4 {
+	font-weight: 400;
+	margin: 0 0 15px;
+}
+
+h1,
+h2 {
+	font-size: 22px;
+	color: $heading;
+}
+
+h3 {
+	font-size: 18px;
+}
+
+h4 {
+	font-size: 18px;
+}
+
+@include mq(35em) {
+	h1,
+	h2 {
+		font-size: 30px;
+	}
+
+	h3 {
+		font-size: 22px;
+	}
+}
+
+h1,
+.title {
+	&:after {
+		content: '';
+		display: block;
+		width: 1.9em;
+		height: 2px;
+		background: #D2D2D2;
+		margin: 0.35em 0 1em;
+	}
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.content a {
+	color: $blue;
+}
+
+p {
+	margin: 0 0 1em;
+}

@@ -33,10 +33,9 @@ function paragraph( $str ) {
  * 
  * @param string $string String to be formatted.
  * @param boolean $line_breaks When true, single-line line-breaks will be converted to HTML break tags.
- * @param boolean $xml When true, an XML self-closing tag will be applied to break tags (<br />).
  * @return string
  */
-function nl2p($string, $line_breaks = true, $xml = true)
+function nl2p($string, $line_breaks = true)
 {
     // Remove existing HTML formatting to avoid double-wrapping things
     $string = str_replace(array('<p>', '</p>', '<br>', '<br />'), '', $string);
@@ -44,7 +43,7 @@ function nl2p($string, $line_breaks = true, $xml = true)
     // It is conceivable that people might still want single line-breaks
     // without breaking into a new paragraph.
     if ($line_breaks == true)
-        return '<p>'.preg_replace(array("/([\n]{2,})/i", "/([^>])\n([^<])/i"), array("</p>\n<p>", '<br'.($xml == true ? ' /' : '').'>'), trim($string)).'</p>';
+        return '<p>'.preg_replace(array("/([\n]{2,})/i", "/([^>])\n([^<])/i"), array("</p>\n<p>", '<br><br>'), trim($string)).'</p>';
     else 
         return '<p>'.preg_replace("/([\n]{1,})/i", "</p>\n<p>", trim($string)).'</p>';
 }
