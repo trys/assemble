@@ -55,6 +55,7 @@ body {
 
 @include mq(48em) {
 	[role=banner] {
+		padding-top: 19px;
 		position: fixed;
 		height: 100%;
 		width: 30%;
@@ -75,6 +76,22 @@ body {
 	body {
 		padding-left: 30%;
 	}
+}
+
+@include mq(55em) {
+	
+	[role=banner] {
+		padding: 19px 2rem;
+	}
+
+}
+
+@include mq(65em) {
+	
+	[role=banner] {
+		padding: 19px 1rem 19px 4rem;
+	}
+
 }
 
 
@@ -98,14 +115,22 @@ body {
 
 @include mq(55em) {
 
+	.primary,
+	.secondary {
+		width: 48%;
+	}
+
+	.primary--thin,
+	.secondary--thin {
+		width: 44%;
+	}
+
 	.primary {
 		margin-bottom: 0;
-		width: 48%;
 		float: left;
 	}
 
 	.secondary {
-		width: 48%;
 		float: right;
 	}
 

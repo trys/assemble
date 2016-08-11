@@ -1,13 +1,17 @@
 <?php
 
-class home extends index {
+class tag extends index {
 
 	public function __construct( $params = array() )
 	{
-		include dirname(__file__) . '/../models/event.php';
+		$params = array_values( $params );
+		if ( ! $params ) {
+			$this->load_view( 'error', $viewmodel );
+			return;
+		}
 
+		include dirname(__file__) . '/../models/event.php';
 		$viewmodel = new ViewModel( array( 'title' => 'Home' ) );
-		
 		
 		$firebase = new \Firebase\FirebaseLib(DEFAULT_URL, DEFAULT_TOKEN);
 		$response = $firebase->get( DEFAULT_PATH . '/events/' );
@@ -18,7 +22,12 @@ class home extends index {
 		if ( $response ) {
 			foreach ( get_object_vars( $response ) as $event_id => $event_response ) {
 				if ( $event_response->start < time() ) {
-					continue;;
+					continue;
+				}
+
+				$tags = check_object( $event_response, 'tags', array() );
+				if ( ! in_array($params[ 0 ], $tags) ) {
+					continue;
 				}
 
 				$event_response->id = $event_id;

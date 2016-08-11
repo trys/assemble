@@ -108,11 +108,11 @@ function url( $controller = '', $action = '', $parameters = '', $with_front = fa
 
 }
 
-function order_object($array = array(), $key = 'points') {
+function order_object($array = array(), $key = 'start', $asc = true) {
 	usort($array, function($a, $b) use ($key) {
 		$p1 = check_object( $b, $key, 0 );
 		$p2 = check_object( $a, $key, 0 );
-		return $p1 - $p2;
+		return $asc ? $p1 - $p2 : $p2 - $p1;
 	});
 	return $array;
 }
@@ -275,4 +275,22 @@ function format_date($date, $echo = true) {
 function is_url($to_test) {
 	preg_match('/\b(([\w-]+:\/\/?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|\/)))/', $to_test, $matches);
 	return ( $matches );
+}
+
+function event_date( $event ) {
+	$start = check_object( $event, 'start' );
+	$end = check_object( $event, 'end' );
+
+	echo '<time datetime="' . date( 'c', $start ) . '">' . format_date( $start, false ) . '</time>';
+
+	if ( $start !== $end ) {
+		echo ' - <time datetime="' . date( 'c', $end ) . '">';
+		if ( date( 'Ymd', $start ) === date( 'Ymd', $end ) ) {
+			$minutes = date( 'i', $end );
+			echo date( 'g', $end ) . ( $minutes === '00' ? '' : '.' . $minutes ) . date( 'a', $end );
+		} else {
+			echo format_date( $end, false );
+		}
+		echo '</time>';
+	}
 }

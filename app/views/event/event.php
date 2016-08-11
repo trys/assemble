@@ -1,6 +1,6 @@
 <div class="primary">
 	<h1><?php echo esc( $viewmodel->event->name );?></h1>
-	<h3 class="event-time"><time datetime="<?php echo date( 'c', $viewmodel->event->start );?>"><?php format_date( $viewmodel->event->start );?></time> - <time datetime="<?php echo date( 'c', $viewmodel->event->start );?>"><?php format_date( $viewmodel->event->end );?></time></h3>
+	<h3 class="event-time"><?php event_date( $viewmodel->event );?></h3>
 
 	<h4><?php echo esc( $viewmodel->event->location );?>
 		<?php if ( $host = check_object( $viewmodel->event, 'host' ) ) :?>
@@ -19,7 +19,11 @@
 	</div>
 </div>
 <aside class="secondary">
-	<div class="map"><div id="map"></div></div>
+	<div class="map">
+		<?php if ( $lat_lng = check_object( $viewmodel->event, 'latlng' ) ) : $lat_lng = explode( ',', $lat_lng ); ?>
+			<div id="map" data-lat="<?php echo esc( $lat_lng[ 0 ] );?>" data-lng="<?php echo esc( $lat_lng[ 1 ] );?>" data-location="<?php echo esc( $viewmodel->event->location );?>"></div>
+		<?php endif;?>
+	</div>
 	<?php if ( $tags = check_object( $viewmodel->event, 'tags' ) ) :
 		$tags = array_map('sanitize', $tags);
 		?>
