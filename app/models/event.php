@@ -21,6 +21,10 @@ class EventModel
 		if ( ! $this->user_id && $current_user = is_user_logged_in() ) {
 			$this->user_id = $current_user->id;
 		}
+
+		if ( check_entity($args, 'distance') ) {
+			$this->distance = check_entity($args, 'distance');
+		}
 	}
 
 	public $id = '';

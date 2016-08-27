@@ -52,8 +52,34 @@ class event extends index {
 		if ( $response ) {
 			$viewmodel = new ViewModel( array( 'title' => 'Events', 'events' => array() ) );
 			foreach ( get_object_vars( $response ) as $event_id => $event_response ) {
+				if ( $event_response->start < time() ) {
+					continue;
+				}
+
+				if ( ! empty( $_GET[ 'lat'] ) ) {
+					$lat = esc( check_array( $_GET, 'lat' ) );
+					$lng = esc( check_array( $_GET, 'lng' ) );
+
+					if ( ! $event_response->latlng ) {
+						continue;
+					}
+
+					$event_latlng = explode(',', $event_response->latlng);
+					
+					$resultDistance = $this->distance($lat, $lng, $event_latlng[ 0 ], $event_latlng[ 1 ]);
+					if ( $resultDistance > 20 ) {
+						continue;
+					} else {
+						$event_response->distance = $resultDistance;
+					}
+				}
+
 				$event_response->id = $event_id;
 				$viewmodel->events[] = new EventModel( $event_response );
+			}
+
+			if ( ! empty( $_GET[ 'lat'] ) ) {
+				$viewmodel->events = order_object( $viewmodel->events, 'distance' );
 			}
 			
 			$this->load_view('event/index', $viewmodel);
@@ -115,6 +141,24 @@ class event extends index {
 			$this->load_view('404');
 		}
 		
+	}
+
+	// Credit: https://www.mullie.eu/geographic-searches/
+	private function distance( $lat1, $lng1, $lat2, $lng2 )
+	{
+	    // convert latitude/longitude degrees for both coordinates
+	    // to radians: radian = degree * π / 180
+	    $lat1 = deg2rad($lat1);
+	    $lng1 = deg2rad($lng1);
+	    $lat2 = deg2rad($lat2);
+	    $lng2 = deg2rad($lng2);
+
+	    // calculate great-circle distance
+	    $distance = acos(sin($lat1) * sin($lat2) + cos($lat1) * cos($lat2) * cos($lng1 - $lng2));
+
+	    // distance in human-readable format:
+	    // earth's radius in km = ~6371
+	    return 6371 * $distance;
 	}
 
 }

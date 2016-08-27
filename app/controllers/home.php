@@ -30,7 +30,7 @@ class home extends index {
 			}
 		}
 
-		$this->load_view( 'event/index', $viewmodel );
+		$this->load_view( 'home/index', $viewmodel );
 	}
 
 }

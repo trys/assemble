@@ -13,6 +13,20 @@
 			<?php paragraph( $long_desc );?>
 		<?php endif;?> 
 
+		<?php if ( $guestlist = check_object( $viewmodel->event, 'guestlist' ) ) :
+			$guestlist = array_map('sanitize', $guestlist);
+			?>
+			<h3>In attendance:</h3>
+			<ul>
+				<?php foreach ( $guestlist as $guest )	:?>
+					<li>
+						<?php echo esc( $guest );?>
+					</li>
+				<?php endforeach;?>
+			</ul>
+			<br />
+		<?php endif;?>
+
 		<?php if ( $viewmodel->event->can_be_edited() ) :?>
 			<p><a href="<?php echo url( 'event', $viewmodel->event->id, 'edit' );?>">Edit</a></p>
 		<?php endif;?>

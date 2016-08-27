@@ -1,10 +1,14 @@
 var assemble = (function() {
   "use strict";
 
+  var key = 'AIzaSyA0RmX6KHUGbE8MPK5x9mVV1HCTul0uziw';
+
   return {
     init: function() {
 
-      assemble.map.init();
+      assemble.map.init( 'assemble.map.loaded' );
+
+      assemble.events.init( 'assemble.events.loaded' );
 
     },
 
@@ -12,12 +16,12 @@ var assemble = (function() {
 
       mapElement: '',
 
-      init: function() {
+      init: function( callback ) {
 
         assemble.map.mapElement = document.getElementById( 'map' );
         if ( assemble.map.mapElement ) {
           var mapScript = document.createElement( 'script' );
-          mapScript.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=assemble.map.loaded&key=AIzaSyA0RmX6KHUGbE8MPK5x9mVV1HCTul0uziw';
+          mapScript.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=' + callback + '&key=' . key;
           document.body.appendChild( mapScript );
         }
       },
@@ -48,6 +52,56 @@ var assemble = (function() {
 
           map.setOptions( { styles: styles } );
       }
+    },
+
+    events: {
+
+      init: function( callback ) {
+        var findForm = document.getElementById('find-event');
+        if ( findForm ) {
+          var mapScript = document.createElement( 'script' );
+          mapScript.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=' + callback + '&key=' + key;
+          document.body.appendChild( mapScript );
+        }
+      },
+
+      loaded: function() {
+
+        var findForm = document.getElementById('find-event');
+        if ( findForm ) {
+          
+          var findFormToggle = document.getElementById('find-event-toggle');
+          findFormToggle.addEventListener('click', function(event) {
+            event.preventDefault();
+            assemble.helpers.toggleClass(findForm, 'showing');
+          });
+
+          var findFormTrigger = document.getElementById('js-find-event');
+          var findFormLocation = document.getElementById('location');
+          findForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            if ( findFormLocation.value ) {
+              var oReq = new XMLHttpRequest();
+              oReq.addEventListener('load', assemble.events.find);
+              oReq.open('POST', 'https://maps.googleapis.com/maps/api/geocode/json?key=' + key + '&address=' + findFormLocation.value );
+              oReq.send();
+            }
+          });
+
+        }
+
+      },
+
+      find: function() {
+        var response = JSON.parse( this.responseText );
+        var findFormLocation = document.getElementById('location');
+        if ( response.status === 'OK' ) {
+          var primaryResult = response.results[ 0 ];
+          window.location.href = '/event?lat=' + primaryResult.geometry.location.lat + '&lng=' + primaryResult.geometry.location.lng + '&location=' + findFormLocation.value;
+        }
+      }
+
     },
 
     helpers: {
