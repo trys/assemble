@@ -8,12 +8,12 @@
 			(function(h){h.className=h.className.replace(/\bno-js\b/,'js')})(document.documentElement);
 		</script>
 		<title><?php echo esc( $viewmodel->title );?></title>
-		<link href="https://fonts.googleapis.com/css?family=Karla:400,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Karla:400,700|Kaushan+Script" rel="stylesheet">
 		<link type="text/css" rel="stylesheet" href="/assets/css/style.css">
 	</head>
 	<body>
 		<header role="banner">
-			<a href="/" class="logo">assemble</a>
+			<a href="/" class="logo">Assemble</a>
 
 			<ul>
 				<li>
@@ -31,6 +31,10 @@
 					</li>
 					<li class="mobile">
 						<a href="/register">register</a>
+					</li>
+				<?php else:?>
+					<li>
+						<a href="/account">account</a>
 					</li>
 				<?php endif;?>
 			</ul>

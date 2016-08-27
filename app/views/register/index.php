@@ -14,6 +14,8 @@
 		<?php text_input( 'email', 'Email Address', check_array( $_POST, 'email' ), false, array( 'type' => 'email' ) );?>
 		<?php text_input( 'password', 'Password', '', false, array( 'type' => 'password' ) );?>
 
+		<?php hold_event();?>
+
 		<input type="hidden" name="method" value="register" />
 		<input type="submit" value="Register" class="button" />
 	</form>
@@ -33,6 +35,8 @@
 
 		<?php text_input( 'login_email', 'Email Address', check_array( $_POST, 'login_email' ), false, array( 'type' => 'email' ) );?>
 		<?php text_input( 'login_password', 'Password', '', false, array( 'type' => 'password' ) );?>
+
+		<?php hold_event();?>
 
 		<input type="hidden" name="method" value="login" />
 		<input type="submit" value="Login" class="button" />

@@ -294,3 +294,14 @@ function event_date( $event ) {
 		echo '</time>';
 	}
 }
+
+
+function hold_event() {
+	if ( ! empty( $_GET[ 'event_name' ] ) ) :?>
+		<?php hidden_input( 'event_name', check_array( $_GET, 'event_name' ) );?>
+		<?php hidden_input( 'location', check_array( $_GET, 'location' ) );?>
+		<?php hidden_input( 'latlng', check_array( $_GET, 'latlng' ) );?>
+		<?php hidden_input( 'start', check_array( $_GET, 'start' ) );?>
+		<?php hidden_input( 'end', check_array( $_GET, 'end' ) );?>
+	<?php endif;
+}

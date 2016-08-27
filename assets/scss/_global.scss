@@ -14,20 +14,23 @@ body {
 	padding: 0.5rem 1rem;
 
 	.logo {
+		letter-spacing: -0.05em;
+		font-family: 'Kaushan Script', cursive;
 		font-size: 2em;
-		border-bottom: 2px solid;
+		border-bottom: 1px solid;
 		width: auto;
 	}
 
 	ul {
-		table-layout: fixed;
-		display: table;
 		width: 100%;
 		margin: 1rem 0 0;
+		text-transform: uppercase;
+		font-weight: 700;
+		display: flex;
+		justify-content: space-between;
 	}
 
 	li {
-		display: table-cell;
 
 		span {
 			display: none;
@@ -64,8 +67,6 @@ body {
 
 		ul {
 			display: block;
-
-			font-size: 1.3em; 
 		}
 
 		li {
@@ -89,7 +90,15 @@ body {
 @include mq(65em) {
 	
 	[role=banner] {
-		padding: 19px 1rem 19px 4rem;
+		padding: 3rem 1rem 19px 4rem;
+	}
+
+}
+
+@include mq(75em) {
+	
+	[role=banner] {
+		font-size: 1.3em;
 	}
 
 }

@@ -75,7 +75,14 @@ class EventModel
 		}
 
 		if ( ! $this->errors && ! $this->user_id ) {
-			redirect( 'register' );
+			$args = array(
+				'event_name' => $this->name,
+				'location' => $this->location,
+				'latlng' => $this->latlng,
+				'start' => $this->start,
+				'end' => $this->end
+			);
+			redirect( 'register?' . http_build_query( $args ) );
 		}
 
 		return $this->errors ? $this->errors : false;

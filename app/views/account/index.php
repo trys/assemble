@@ -16,4 +16,5 @@ if ( $website ) {
 
 if ( $viewmodel->user->can_be_edited() ) :?>
 	<p><a href="<?php echo url( 'account', 'edit' );?>">Edit</a></p>
+	<p><a href="<?php echo url( 'register' );?>">Logout</a></p>
 <?php endif;?>

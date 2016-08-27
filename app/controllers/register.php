@@ -42,7 +42,19 @@ class register extends index {
 			$response = $user->save();
 
 			$_SESSION[ 'user' ] = $response;
-			redirect();
+			if ( ! empty( $_GET[ 'event_name' ] ) ) {
+				$args = array(
+					'event_name' => check_array( $_GET, 'event_name' ),
+					'location' => check_array( $_GET, 'location' ),
+					'latlng' => check_array( $_GET, 'latlng' ),
+					'start' => check_array( $_GET, 'start' ),
+					'end' => check_array( $_GET, 'end' )
+				);
+
+				redirect( 'event', 'create?' . http_build_query( $args ) );
+			} else {
+				redirect();
+			}
 		}
 	}
 
@@ -61,7 +73,20 @@ class register extends index {
 			
 			if ( $loggedIn = $user->login() ) {
 				$_SESSION[ 'user' ] = $loggedIn;
-				redirect();
+
+				if ( ! empty( $_GET[ 'event_name' ] ) ) {
+					$args = array(
+						'event_name' => check_array( $_GET, 'event_name' ),
+						'location' => check_array( $_GET, 'location' ),
+						'latlng' => check_array( $_GET, 'latlng' ),
+						'start' => check_array( $_GET, 'start' ),
+						'end' => check_array( $_GET, 'end' )
+					);
+
+					redirect( 'event', 'create?' . http_build_query( $args ) );
+				} else {
+					redirect();
+				}
 			} else {
 				$viewmodel->login_errors = array( 'email' => 'Please double-check your login details' );
 				$this->load_view( 'register/index', $viewmodel );

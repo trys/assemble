@@ -18,7 +18,7 @@ class home extends index {
 		if ( $response ) {
 			foreach ( get_object_vars( $response ) as $event_id => $event_response ) {
 				if ( $event_response->start < time() ) {
-					continue;;
+					continue;
 				}
 
 				$event_response->id = $event_id;

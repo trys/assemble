@@ -14,10 +14,10 @@
 		<?php text_input( 'location', 'Location', check_object( $viewmodel->event, 'location' ), false );?>
 		<?php hidden_input( 'latlng', check_object( $viewmodel->event, 'latlng' ) );?>
 		
-		<?php $start = check_object( $viewmodel->event, 'start' ) ? date( 'c', $viewmodel->event->start ) : '';
+		<?php $start = check_object( $viewmodel->event, 'start' ) ? date( 'Y-m-d\TH:i:s', $viewmodel->event->start ) : '';
 		text_input( 'start', 'Event Start', $start, false, array( 'type' => 'datetime-local' ) );?>
 		
-		<?php $end = check_object( $viewmodel->event, 'end' ) ? date( 'c', $viewmodel->event->end ) : '';
+		<?php $end = check_object( $viewmodel->event, 'end' ) ? date( 'Y-m-d\TH:i:s', $viewmodel->event->end ) : '';
 		text_input( 'end', 'Event End', $end, false, array( 'type' => 'datetime-local' ) );?>
 		
 		<?php textarea_input( 'long_desc', 'Event Description', check_object( $viewmodel->event, 'long_desc' ), false );?>
@@ -37,3 +37,6 @@
 		<input type="submit" value="Save" class="button" />
 	</form>
 </div>
+
+
+<!-- 05/09/2016, 10:00 -->

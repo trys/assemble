@@ -16,9 +16,17 @@
 
 
 .event-preview {
-	flex: 1 0 400px;
+	flex: 1 0 100%;
 	border-bottom: 1px solid $line;
 	border-left: 1px solid $line;
+
+	@include mq( 400px ) {
+		flex: 1 0 400px;
+	}
+
+	p {
+		max-width: 400px;
+	}
 	
 	a {
 		display: block;
