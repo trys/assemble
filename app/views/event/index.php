@@ -3,11 +3,16 @@
 	<form id="find-event">
 		<p>
 			<label for="location" class="screen-reader-text">Location</label>
-			<input type="text" name="location" id="location" required placeholder="Postcode, Town, Etc..." />
+			<input type="text" name="location" id="location" required placeholder="Postcode, Town, Etc..." value="<?php echo esc( check_array( $_GET, 'location' ) );?>" />
 		</p>
 		<input type="submit" value="Search" id="js-find-event" />
 	</form>
 </nav>
+
+<?php if ( ! empty( $_GET[ 'location' ] ) && $viewmodel->events ) :?>
+	<h3>Events within 20 miles of <?php echo esc( $_GET[ 'location' ] );?>.</h3>
+<?php endif;?>
+
 <div class="events">
 	<?php if ( $viewmodel->events ) : ?>
 		<?php foreach ( $viewmodel->events as $event ) :?>

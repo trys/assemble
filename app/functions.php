@@ -112,7 +112,7 @@ function order_object($array = array(), $key = 'start', $asc = true) {
 	usort($array, function($a, $b) use ($key) {
 		$p1 = check_object( $b, $key, 0 );
 		$p2 = check_object( $a, $key, 0 );
-		return $asc ? $p1 - $p2 : $p2 - $p1;
+		return $asc ? strcmp( $p1, $p2 ) : strcmp( $p2, $p1 );
 	});
 	return $array;
 }

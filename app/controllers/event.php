@@ -78,7 +78,7 @@ class event extends index {
 				$viewmodel->events[] = new EventModel( $event_response );
 			}
 
-			if ( ! empty( $_GET[ 'lat'] ) ) {
+			if ( ! empty( $_GET[ 'lat'] ) && $viewmodel->events ) {
 				$viewmodel->events = order_object( $viewmodel->events, 'distance' );
 			}
 			

@@ -10,7 +10,7 @@
 			</ul>
 		<?php endif;?>
 
-		<?php text_input( 'name', 'Event Name', check_object( $viewmodel->event, 'name' ), false );?>
+		<?php text_input( 'name', 'Event Name', check_object( $viewmodel->event, 'name' ), false, array( 'autofocus' => '1' ) );?>
 		<?php text_input( 'location', 'Location', check_object( $viewmodel->event, 'location' ), false );?>
 		<?php hidden_input( 'latlng', check_object( $viewmodel->event, 'latlng' ) );?>
 		

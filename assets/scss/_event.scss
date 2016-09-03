@@ -90,11 +90,11 @@
 		display: inline-block;
 		max-width: 350px;
 		width: 100%;
-		// display: none;
+		display: none;
 		position: relative;
 
 		p {
-			margin: 1rem 0 0;
+			margin: 0;
 		}
 
 		[type=submit] {
@@ -111,5 +111,6 @@
 
 	form.showing {
 		display: inline-block;
+		margin-bottom: -1px;
 	}
 }

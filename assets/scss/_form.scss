@@ -35,6 +35,10 @@ input {
 	width: 100%;
 	color: $copy;
 	font: 400 16px $font;
+
+	&.focused:invalid {
+		border-color: #F13030;
+	}
 }
 
 form.submitted {
@@ -113,4 +117,26 @@ input[type=button]:hover {
 	padding-bottom: 20px;
 	margin-bottom: 20px;
 	color: #F13030;
+}
+
+form p {
+	position: relative;
+}
+
+.find-address {
+	position: absolute;
+	bottom: 0;
+	right: 0.5rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-indent: 200%;
+	width: 2rem;
+	height: 2.9rem;
+	background: url(../images/pin.png) center /auto 70% no-repeat;
+	border: none;
+
+	&.loading {
+		opacity: 0.3;
+		outline: none;
+	}
 }
