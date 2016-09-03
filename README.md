@@ -1,4 +1,4 @@
 # assemble
 Event app
 
-Run from `http://assemble.dev`
+Run `npm install`, then `gulp serve`.

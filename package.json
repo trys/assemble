@@ -7,6 +7,7 @@
     "browser-sync": "^2.11.1",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
+    "gulp-connect-php": "0.0.8",
     "gulp-notify": "^2.2.0",
     "gulp-postcss": "^6.1.0",
     "gulp-sass": "^2.2.0",

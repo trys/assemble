@@ -86,6 +86,10 @@
 		margin-bottom: 0;
 	}
 
+	#find-event-toggle {
+		margin-bottom: 0.5rem;
+	}
+
 	form {
 		display: inline-block;
 		max-width: 350px;
@@ -112,5 +116,10 @@
 	form.showing {
 		display: inline-block;
 		margin-bottom: -1px;
+	}
+
+	.find-address {
+		background: url(../images/pin.png) center /auto 50% no-repeat;
+		right: 6.5rem;
 	}
 }

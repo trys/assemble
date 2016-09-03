@@ -4,6 +4,7 @@ var gulp = require( 'gulp' ),
 	uglify = require('gulp-uglify'),
 	concat = require( 'gulp-concat'),
 	notify = require( 'gulp-notify' ),
+	php  = require('gulp-connect-php'),
 	browserSync = require( 'browser-sync' ),
 	postCSS = {
 		core: require( 'gulp-postcss' ),
@@ -75,6 +76,17 @@ gulp.task( 'scss', function() {
 		.pipe( gulp.dest( 'assets/css/' ) );
 });
 
+gulp.task('php', function() {
+	php.server({
+		base: './',
+		port: 8010,
+		keepalive: true,
+		bin: '/usr/bin/php',
+		ini: '/etc/php5/cli/php.ini',
+		router: 'router.php'
+	});
+});
+
 
 function onError( err ) {
 	notify().write( err );
@@ -89,3 +101,5 @@ gulp.task( 'default', [ 'browser-sync', 'js', 'scss' ], function () {
 
 
 gulp.task( 'build', [ 'js', 'scss' ] );
+
+gulp.task( 'serve', [ 'php' ] );
