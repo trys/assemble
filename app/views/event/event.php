@@ -28,7 +28,7 @@
 		<?php endif;?>
 
 		<?php if ( $viewmodel->event->can_be_edited() ) :?>
-			<p><a href="<?php echo url( 'event', $viewmodel->event->id, 'edit' );?>">Edit</a></p>
+			<p><a href="<?php echo url( 'event', $viewmodel->event->id, 'edit' );?>" class="button">Edit</a></p>
 		<?php endif;?>
 	</div>
 </div>
@@ -42,11 +42,9 @@
 		$tags = array_map('sanitize', $tags);
 		?>
 		<ul class="tags">
-			<?php foreach ( $tags as $tag )	:?>
-				<li>
-					<a href="/tag/<?php echo str_replace(' ', '-', $tag );?>">#<?php echo str_replace(' ', '-', $tag );?></a>
-				</li>
-			<?php endforeach;?>
+			<?php foreach ( $tags as $tag )	:
+				?><li><a href="/tag/<?php echo str_replace(' ', '-', $tag );?>">#<?php echo str_replace(' ', '-', $tag );?></a></li><?php 
+			endforeach;?>
 		</ul>
 	<?php endif;?>
 </aside>

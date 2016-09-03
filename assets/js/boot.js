@@ -165,6 +165,20 @@ var assemble = (function() {
         };
       }
 
+
+
+      var addAnother = document.querySelectorAll('.js-add-another');
+      for (var i = addAnother.length - 1; i >= 0; i--) {
+        addAnother[i].addEventListener('click', function(e) {
+          e.preventDefault();
+          var newInput = document.createElement('input');
+          newInput.setAttribute('type', this.previousElementSibling.getAttribute('type'));
+          newInput.setAttribute('name', this.previousElementSibling.getAttribute('name'));
+          this.parentNode.insertBefore(newInput, this);
+          newInput.focus();
+        }, false);
+      };
+
     },
 
     helpers: {

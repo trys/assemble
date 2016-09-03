@@ -14,17 +14,29 @@ body {
 	padding: 0.5rem 1rem;
 
 	.logo {
-		letter-spacing: -0.05em;
-		font-family: 'Kaushan Script', cursive;
-		font-size: 2em;
-		border-bottom: 1px solid;
-		width: auto;
+		font-weight: 700;
+		font-size: 1.25em;
+
+		img {
+			display: none;
+		}
+
+		@include mq(48em) {
+			img {
+				display: block;
+				max-width: 100%;
+				width: 220px;
+			}
+
+			span {
+				display: none;
+			}
+		}
 	}
 
 	ul {
 		width: 100%;
 		margin: 1rem 0 0;
-		text-transform: uppercase;
 		font-weight: 700;
 		display: flex;
 		justify-content: space-between;
@@ -71,6 +83,7 @@ body {
 
 		li {
 			display: block;
+			padding-left: 12px;
 		}
 	}
 
@@ -143,4 +156,12 @@ body {
 		float: right;
 	}
 
+}
+
+.clear {
+	&:after {
+		display: table;
+		content: '';
+		clear: both;
+	}
 }

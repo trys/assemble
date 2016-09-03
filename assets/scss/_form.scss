@@ -69,6 +69,7 @@ label {
 	display: block;
 	margin: 0 0 2px;
 	cursor: pointer;
+	color: $heading;
 	font: 700 1.25rem $font;
 }
 
@@ -112,6 +113,19 @@ input[type=button]:hover {
 	color: #FFF;
 }
 
+.button--discreet {
+	color: $copy;
+	border-color: $light;
+	margin: 0;
+	padding: 0.5rem 0.8rem;
+	font-size: 0.8em;
+
+	&:hover {
+		background: $light;
+		color: $copy;
+	}
+}
+
 .errors {
 	border-bottom: 2px solid #F13030;
 	padding-bottom: 20px;
@@ -139,4 +153,14 @@ form p {
 		opacity: 0.3;
 		outline: none;
 	}
+}
+
+.multiline {
+	input {
+		margin-bottom: 0.25rem;
+	}
+}
+
+.no-js .js-add-another {
+	display: none;
 }

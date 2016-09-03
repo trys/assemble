@@ -235,7 +235,7 @@ function textarea_input( $name, $label, $value = '', $required = false, $attribu
 
 
 function multiline_input( $name, $label = '', $value = array() ) {
-	echo '<p><label>' . $label . '</label> ';
+	echo '<p class="multiline "><label>' . $label . '</label> ';
 	$value = is_array( $value ) ? $value : array();
 	foreach ( $value as $line ) {
 		echo '<input type="text"'
@@ -244,7 +244,12 @@ function multiline_input( $name, $label = '', $value = array() ) {
 		. '/>';
 	}
 
-	echo '<input type="text"' . input_attribute( 'name', $name ) . '/>';
+	if ( ! $value ) {
+		echo '<input type="text"' . input_attribute( 'name', $name ) . '/>';
+	}
+
+	echo '<button class="button button--discreet js-add-another">Add Another</button>';
+	echo '<noscript><input type="text"' . input_attribute( 'name', $name ) . '/></noscript>';
 	
 	echo '</p>';
 }

@@ -1,3 +1,7 @@
+<?php if ( ! empty( $_GET[ 'event_name' ] ) ) :?>
+	<h3>You need to be registed or logged in to create an event.</h3>
+<?php endif;?>
+
 <div class="primary primary--thin">
 	<h1>Register</h1>
 	<form method="POST">
@@ -10,9 +14,9 @@
 			</ul>
 		<?php endif;?>
 
-		<?php text_input( 'name', 'Your Name', check_array( $_POST, 'name' ), false );?>
-		<?php text_input( 'email', 'Email Address', check_array( $_POST, 'email' ), false, array( 'type' => 'email' ) );?>
-		<?php text_input( 'password', 'Password', '', false, array( 'type' => 'password' ) );?>
+		<?php text_input( 'name', 'Your Name', check_array( $_POST, 'name' ), true );?>
+		<?php text_input( 'email', 'Email Address', check_array( $_POST, 'email' ), true, array( 'type' => 'email' ) );?>
+		<?php text_input( 'password', 'Password', '', true, array( 'type' => 'password' ) );?>
 
 		<?php hold_event();?>
 
@@ -33,8 +37,8 @@
 			</ul>
 		<?php endif;?>
 
-		<?php text_input( 'login_email', 'Email Address', check_array( $_POST, 'login_email' ), false, array( 'type' => 'email' ) );?>
-		<?php text_input( 'login_password', 'Password', '', false, array( 'type' => 'password' ) );?>
+		<?php text_input( 'login_email', 'Email Address', check_array( $_POST, 'login_email' ), true, array( 'type' => 'email' ) );?>
+		<?php text_input( 'login_password', 'Password', '', true, array( 'type' => 'password' ) );?>
 
 		<?php hold_event();?>
 
