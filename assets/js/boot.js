@@ -7,7 +7,6 @@ var assemble = (function() {
     init: function() {
 
       assemble.map.init( 'assemble.map.loaded' );
-
       assemble.events.init( 'assemble.events.loaded' );
 
     },

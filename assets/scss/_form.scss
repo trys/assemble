@@ -37,6 +37,14 @@ input {
 	font: 400 16px $font;
 }
 
+form.submitted {
+	textarea:invalid,
+	select:invalid,
+	input:invalid {
+		border-color: #F13030;
+	}
+}
+
 textarea:focus,
 select:focus,
 input:focus {
