@@ -155,8 +155,8 @@ function text_input( $name, $label, $value = '', $required = false, $attributes 
 	. input_attribute( 'id', $name )
 	. input_attribute( 'name', $name )
 	. input_attribute( 'value', esc( $value ) )
-	. input_attribute( 'required', $required )
-	. '/></p>';
+	. input_attribute( 'required', $required ? 'required' : false )
+	. '/><span class="message"></span></p>';
 }
 
 
@@ -167,11 +167,11 @@ function number_input( $name, $label, $value = '', $required = false, $min = 0, 
 	. input_attribute( 'id', $name )
 	. input_attribute( 'name', $name )
 	. input_attribute( 'value', esc( $value ) )
-	. input_attribute( 'required', $required )
+	. input_attribute( 'required', $required ? 'required' : false )
 	. input_attribute( 'min', $min )
 	. input_attribute( 'max', $max )
 	. input_attribute( 'step', 1 )
-	. '/></p>';
+	. '/><span class="message"></span></p>';
 }
 
 
@@ -192,7 +192,7 @@ function select_input( $name, $label, $fields = array(), $value = '', $none = ''
 	<select'
 	. input_attribute( 'id', $name )
 	. input_attribute( 'name', $name )
-	. input_attribute( 'required', $required )
+	. input_attribute( 'required', $required ? 'required' : false )
 	. '>';
 
 	if ( $none ) {
@@ -206,7 +206,7 @@ function select_input( $name, $label, $fields = array(), $value = '', $none = ''
 		}
 	}
 
-	echo '</select></p>';
+	echo '</select><span class="message"></span></p>';
 }
 
 
@@ -229,8 +229,8 @@ function textarea_input( $name, $label, $value = '', $required = false, $attribu
 	. $attributes_string
 	. input_attribute( 'id', $name )
 	. input_attribute( 'name', $name )
-	. input_attribute( 'required', $required )
-	. '>' . esc( $value ) . '</textarea></p>';
+	. input_attribute( 'required', $required ? 'required' : false )
+	. '>' . esc( $value ) . '</textarea><span class="message"></span></p>';
 }
 
 

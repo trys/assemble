@@ -37,6 +37,3 @@
 		<input type="submit" value="Save" class="button" /> <a href="<?php echo url( 'event', $viewmodel->event->id );?>" class="button">Cancel</a>
 	</form>
 </div>
-
-
-<!-- 05/09/2016, 10:00 -->

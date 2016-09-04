@@ -16,7 +16,7 @@
 
 		<?php text_input( 'name', 'Your Name', check_array( $_POST, 'name' ), true );?>
 		<?php text_input( 'email', 'Email Address', check_array( $_POST, 'email' ), true, array( 'type' => 'email' ) );?>
-		<?php text_input( 'password', 'Password', '', true, array( 'type' => 'password' ) );?>
+		<?php text_input( 'password', 'Password', '', true, array( 'type' => 'password', 'pattern' => '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,100}' ) );?>
 
 		<?php hold_event();?>
 

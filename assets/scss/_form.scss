@@ -24,6 +24,15 @@ input {
 	outline: none;
 }
 
+form .message {
+	display: none;
+	position: absolute;
+	color: #F13030;
+	font-size: 0.7em;
+	font-weight: 700;
+	margin: 0.25rem 0 0;
+}
+
 textarea,
 select,
 input {
@@ -38,6 +47,21 @@ input {
 
 	&.focused:invalid {
 		border-color: #F13030;
+
+		&[required] + .message {
+			display: block;
+			&:before {
+				content: 'This field is required';
+			}
+		}
+
+		&[pattern] + .message {
+			position: static;
+			display: block;
+			&:before {
+				content: 'Please make sure your password is 8+ characters and contains at least a number and a uppercase letter';
+			}
+		}
 	}
 }
 

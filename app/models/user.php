@@ -46,6 +46,12 @@ class User
 
 		if ( ! $this->password ) {
 			$this->errors[ 'password' ] = 'Please provide your password';
+		} else {
+			// http://regexlib.com/REDetails.aspx?regexp_id=31
+			preg_match('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,100}$/', $this->password, $match);
+			if ( ! $match ) {
+				$this->errors[ 'password' ] = 'Please make sure your password is 8+ characters and contains at least a number and a uppercase letter';
+			}
 		}
 
 		return $this->errors ? $this->errors : false;

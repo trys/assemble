@@ -110,7 +110,8 @@ var assemble = (function() {
       if (inputs) {
         for (var i = inputs.length - 1; i >= 0; i--) {
           inputs[i].addEventListener('blur', function() {
-            assemble.helpers.addClass(this, 'focused')
+            assemble.helpers.addClass(this, 'focused');
+            this.checkValidity();
           }, false);
         };
       }
@@ -149,17 +150,19 @@ var assemble = (function() {
             location[i].parentNode.appendChild(locationButton);
 
             location[i].addEventListener('blur', function() {
-              var request = new XMLHttpRequest();
-              request.addEventListener('load', function() {
-                var response = JSON.parse( this.responseText );
-                var latlng = document.querySelector('[name=latlng]');
-                if ( response.status === 'OK' ) {
-                  var primaryResult = response.results[ 0 ];
-                  latlng.value = primaryResult.geometry.location.lat + ',' + primaryResult.geometry.location.lng;
-                }
-              });
-              request.open('POST', 'https://maps.googleapis.com/maps/api/geocode/json?key=' + key + '&address=' + this.value );
-              request.send();
+              if (this.value) {
+                var request = new XMLHttpRequest();
+                request.addEventListener('load', function() {
+                  var response = JSON.parse( this.responseText );
+                  var latlng = document.querySelector('[name=latlng]');
+                  if ( response.status === 'OK' ) {
+                    var primaryResult = response.results[ 0 ];
+                    latlng.value = primaryResult.geometry.location.lat + ',' + primaryResult.geometry.location.lng;
+                  }
+                });
+                request.open('POST', 'https://maps.googleapis.com/maps/api/geocode/json?key=' + key + '&address=' + this.value );
+                request.send();
+              }
             }, false);
           })(i);
         };
