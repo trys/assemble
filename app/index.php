@@ -35,6 +35,11 @@ class assemble
 			}
 		}
 
+		if ( $params && strpos($params[0], 'event?') === 0 ) {
+			$params = explode( '?', $params[0] );
+			$params = array( $params[0] );
+		}
+
 		$overwrites = array();
 
 		if ( in_array( $params[ 0 ], $overwrites ) ) {

@@ -1,6 +1,6 @@
 <nav class="find-event">
 	<button type="button" class="button" id="find-event-toggle">Find Nearby Events</button>
-	<form id="find-event">
+	<form id="find-event" action="<?php echo url('event', '', '', true);?>">
 		<p>
 			<label for="location" class="screen-reader-text">Location</label>
 			<input type="text" name="location" id="location" required placeholder="Postcode, Town, Etc..." value="<?php echo esc( check_array( $_GET, 'location' ) );?>" />

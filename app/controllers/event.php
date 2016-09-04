@@ -7,7 +7,9 @@ class event extends index {
 		$params = array_values( $params );
 		include_once dirname(__file__) . '/../models/event.php';
 
-		if ( ! $params ) {
+		$first = check_array( $params, 0 );
+
+		if ( ! $params || ( $first && $first[0] === '?' ) ) {
 			$this->index();
 		} elseif ( $params[ 0 ] === 'create' ) {
 			$this->create();
