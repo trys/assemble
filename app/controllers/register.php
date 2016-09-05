@@ -5,9 +5,7 @@ class register extends index {
 	public function __construct( $params = array() )
 	{
 
-		if ( ! $params ) {
-			$this->index();
-		}
+		$this->index();
 
 	}
 
@@ -48,7 +46,12 @@ class register extends index {
 					'location' => check_array( $_GET, 'location' ),
 					'latlng' => check_array( $_GET, 'latlng' ),
 					'start' => check_array( $_GET, 'start' ),
-					'end' => check_array( $_GET, 'end' )
+					'end' => check_array( $_GET, 'end' ),
+					'long_desc' => check_array( $_GET, 'long_desc' ),
+					'short_desc' => check_array( $_GET, 'short_desc' ),
+					'host' => check_array( $_GET, 'host' ),
+					'tags' => check_array( $_GET, 'tags' ),
+					'guestlist' => check_array( $_GET, 'guestlist' )
 				);
 
 				redirect( 'event', 'create?' . http_build_query( $args ) );
@@ -80,7 +83,12 @@ class register extends index {
 						'location' => check_array( $_GET, 'location' ),
 						'latlng' => check_array( $_GET, 'latlng' ),
 						'start' => check_array( $_GET, 'start' ),
-						'end' => check_array( $_GET, 'end' )
+						'end' => check_array( $_GET, 'end' ),
+						'long_desc' => check_array( $_GET, 'long_desc' ),
+						'short_desc' => check_array( $_GET, 'short_desc' ),
+						'host' => check_array( $_GET, 'host' ),
+						'tags' => check_array( $_GET, 'tags' ),
+						'guestlist' => check_array( $_GET, 'guestlist' )
 					);
 
 					redirect( 'event', 'create?' . http_build_query( $args ) );

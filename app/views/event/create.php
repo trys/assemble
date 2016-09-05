@@ -30,5 +30,21 @@
 			}
 		}
 		text_input( 'end', 'Event End', $end, true, array( 'type' => 'datetime-local', 'placeholder' => 'dd/mm/yyyy, hh:mm' ) );?>
+
+	<?php textarea_input( 'long_desc', 'Event Description', check_array( $_POST, 'long_desc' ) ?: check_array( $_GET, 'long_desc' ), false );?>
+	<?php text_input( 'short_desc', 'Event Summary', check_array( $_POST, 'short_desc' ) ?: check_array( $_GET, 'short_desc' ), false );?>
+	<?php text_input( 'host', 'Event Host', check_array( $_POST, 'host' ) ?: check_array( $_GET, 'host' ), false );?>
+	
+	<?php
+	$tags = check_array( $_POST, 'tags', array() ) ?: check_array( $_GET, 'tags', array() );
+	multiline_input( 'tags[]', 'Tags', $tags );
+	?>
+
+	<?php
+	$guestlist = check_array( $_POST, 'guestlist', array() ) ?: check_array( $_GET, 'guestlist', array() );
+	multiline_input( 'guestlist[]', 'Guestlist', $guestlist );
+	?>
+
+
 	<input type="submit" name="submit" value="Go!" class="button" />
 </form>

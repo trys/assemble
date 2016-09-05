@@ -308,5 +308,12 @@ function hold_event() {
 		<?php hidden_input( 'latlng', check_array( $_GET, 'latlng' ) );?>
 		<?php hidden_input( 'start', check_array( $_GET, 'start' ) );?>
 		<?php hidden_input( 'end', check_array( $_GET, 'end' ) );?>
+		<?php hidden_input( 'long_desc', check_array( $_GET, 'long_desc' ) );?>
+		<?php hidden_input( 'short_desc', check_array( $_GET, 'short_desc' ) );?>
+		<?php hidden_input( 'host', check_array( $_GET, 'host' ) );?>
+		<div style="display: none;">
+			<?php multiline_input( 'tags[]', '', check_array( $_GET, 'tags' ) );?>
+			<?php multiline_input( 'guestlist[]', '', check_array( $_GET, 'guestlist' ) );?>
+		</div>
 	<?php endif;
 }

@@ -26,13 +26,13 @@ gulp.task( 'browser-sync', function() {
 
 gulp.task( 'js', function() {
 	return gulp.src( ['assets/js/*.js'] )
-		.pipe( maps.init() )
+		// .pipe( maps.init() )
 		.pipe(
 			concat( 'boot.js' )
 		)
-		.pipe( uglify() )
+		// .pipe( uglify() )
 		.on( 'error', onError )
-		.pipe( maps.write( '../../maps/' ) )
+		// .pipe( maps.write( '../../maps/' ) )
 		.pipe( gulp.dest( 'assets/js/min' ) );
 });
 

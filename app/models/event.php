@@ -84,7 +84,12 @@ class EventModel
 				'location' => $this->location,
 				'latlng' => $this->latlng,
 				'start' => $this->start,
-				'end' => $this->end
+				'end' => $this->end,
+				'long_desc' => $this->long_desc,
+				'short_desc' => $this->short_desc,
+				'host' => $this->host,
+				'guestlist' => $this->guestlist,
+				'tags' => $this->tags
 			);
 			redirect( 'register?' . http_build_query( $args ) );
 		}

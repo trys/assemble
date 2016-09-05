@@ -1,5 +1,5 @@
 <div class="primary">
-	<h1>Edit event</h1>
+	<h1>Add more detail about the event</h1>
 	<form method="POST">
 
 		<?php if ( $errors = check_object( $viewmodel, 'errors' ) ) :?>

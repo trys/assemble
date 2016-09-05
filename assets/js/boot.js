@@ -149,7 +149,41 @@ var assemble = (function() {
             }, false);
             location[i].parentNode.appendChild(locationButton);
 
-            location[i].addEventListener('blur', function() {
+            // location[i].addEventListener('keydown', function(event) {
+            var keyThrottle = assemble.helpers.throttle(function() {
+              var input = location[i];
+              if (input.value && input.value !== undefined && input.value.length > 2) {
+                var request = new XMLHttpRequest();
+                request.addEventListener('load', function() {
+                  var response = JSON.parse( this.responseText );
+                  if ( response.status === 'OK' && response.results ) {
+                    var autocompleteResults = [];
+                    for (var i = 0; i < response.results.length; i++) {
+                      autocompleteResults.push( { label: response.results[i].formatted_address, value: response.results[i].formatted_address + '//' + response.results[i].geometry.location.lat + ',' + response.results[i].geometry.location.lng } );
+                    }
+                    locationAutocomplete.list = autocompleteResults;
+                    locationAutocomplete.evaluate();
+                  }
+                });
+                request.open('POST', 'https://maps.googleapis.com/maps/api/geocode/json?key=' + key + '&address=' + input.value );
+                request.send();
+              }
+            }, 1000);
+            location[i].addEventListener( 'keypress', keyThrottle, false );
+            var locationAutocomplete = new Awesomplete(location[i]);
+            location[i].addEventListener('awesomplete-select', function(event) {
+              var text = event.text.value;
+              var text = text.split('//');
+              event.text.value = text[0];
+              var latlng = document.querySelector('[name=latlng]');
+              if ( latlng ) {
+                latlng.value = text[1];
+              }
+
+            });
+            // }, false);
+
+            /*location[i].addEventListener('blur', function() {
               if (this.value) {
                 var request = new XMLHttpRequest();
                 request.addEventListener('load', function() {
@@ -164,6 +198,7 @@ var assemble = (function() {
                 request.send();
               }
             }, false);
+            */
           })(i);
         };
       }
@@ -181,6 +216,53 @@ var assemble = (function() {
           newInput.focus();
         }, false);
       };
+
+
+
+      var start = document.querySelector('[name="start"][type="datetime-local"]');
+      var end = document.querySelector('[name="end"][type="datetime-local"]');
+      if (start && end) {
+        start.addEventListener('blur', function() {
+          if ( this.value ) {
+            this.nextElementSibling.innerHTML = '';
+            var date = Math.round(new Date(this.value).getTime());
+            var now = Date.now();
+            if ( now > date ) {
+              var error = 'Please select a date in the future';
+              this.setCustomValidity(error);
+              this.nextElementSibling.innerHTML = error;
+            } else {
+              this.setCustomValidity('');
+              this.nextElementSibling.innerHTML = '';
+            }
+          } else {
+            this.nextElementSibling.innerHTML = 'This field is required';
+          }
+        }, false);
+
+        end.addEventListener('blur', function() {
+          if ( this.value ) {
+            this.nextElementSibling.innerHTML = '';
+            var date = Math.round(new Date(this.value).getTime());
+            var now = Date.now();
+            if ( ! start.value ) {
+              return;
+            }
+            var startDate = Math.round(new Date(start.value).getTime());
+
+            if ( now > date || startDate > date ) {
+              var error = 'Please select a date in the future';
+              this.setCustomValidity(error);
+              this.nextElementSibling.innerHTML = error;
+            } else {
+              this.setCustomValidity('');
+              this.nextElementSibling.innerHTML = '';
+            }
+          } else {
+            this.nextElementSibling.innerHTML = 'This field is required';
+          }
+        }, false);
+      }
 
     },
 

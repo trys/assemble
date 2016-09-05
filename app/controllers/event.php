@@ -37,7 +37,7 @@ class event extends index {
 				return;
 			} else {
 				$event_id = json_decode( $event->save() );
-				redirect( 'event', $event_id->name );
+				redirect( 'event', $event_id->name, 'edit' );
 			}
 		} else {
 			$this->load_view('event/create', $viewmodel);

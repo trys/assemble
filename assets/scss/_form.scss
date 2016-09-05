@@ -50,7 +50,7 @@ input {
 
 		&[required] + .message {
 			display: block;
-			&:before {
+			&:empty:before {
 				content: 'This field is required';
 			}
 		}
