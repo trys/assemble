@@ -36,8 +36,14 @@ class assemble
 		}
 
 		if ( $params && ( strpos($params[0], 'event?') === 0 || strpos($params[0], 'register?') === 0 || ( isset( $params[1] ) && strpos($params[1], 'create?') === 0 ) ) ) {
-			$params = explode( '?', $params[0] );
-			$params = array( $params[0] );
+
+			if ( isset( $params[1] ) && strpos($params[1], 'create?') === 0 ) {
+				$params = explode( '?', $params[0] );
+				$params = array( $params[0], 'create' );
+			} else {
+				$params = explode( '?', $params[0] );
+				$params = array( $params[0] );
+			}
 		}
 
 		$overwrites = array();

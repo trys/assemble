@@ -113,6 +113,11 @@ class EventModel
 			'start' => $this->start,
 			'end' => $this->end,
 			'user_id' => $this->user_id,
+			'long_desc' => $this->long_desc,
+			'short_desc' => $this->short_desc,
+			'host' => $this->host,
+			'guestlist' => $this->guestlist,
+			'tags' => $this->tags
 		);
 
 		$eventToSave = array_map('sanitize', $eventToSave);

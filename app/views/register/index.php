@@ -1,5 +1,6 @@
 <?php if ( ! empty( $_GET[ 'event_name' ] ) ) :?>
 	<h3>You need to be registed or logged in to create an event.</h3>
+	<p>Don't worry, we've saved your event for when you log in!</p>
 <?php endif;?>
 
 <div class="primary primary--thin">
